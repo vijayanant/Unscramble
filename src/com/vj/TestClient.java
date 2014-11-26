@@ -12,7 +12,8 @@ public class TestClient {
         while (scanner.hasNextLine()) {
             String letters = scanner.next();
             char keyLetter = scanner.next().trim().charAt(0);
-            System.out.println("get(" + letters + ", " + keyLetter + ") = " + ds.get(letters,keyLetter));
+            Iterable<String> words = ds.get(letters, keyLetter);
+            System.out.println("get(" + letters + ", " + keyLetter + ") = " + words);
         }
     }
 
