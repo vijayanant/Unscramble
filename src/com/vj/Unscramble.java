@@ -9,7 +9,6 @@ import java.util.Arrays;
 public final class Unscramble {
     private Node root;
     private static final String LETTERS = "abcdefghijklmnopqrstuvwxyz";
-    //    private static final String LETTERS = "abcdefghijklmnopqrstuvwxyz'éà";
     private static final int NUMBER_OF_LETTERS = LETTERS.length();
 
     private class Node {
@@ -57,19 +56,19 @@ public final class Unscramble {
     }
 
     private final void get(Node x, String key, int index, int depth, int keyCharPos, ArrayList<String> result) {
-//        System.out.println("GET x.key = [" + x.key + "], key = [" + key + "], index = [" + index + "], depth = [" + depth + "], keyCharPos = [" + keyCharPos + "], result = [" + result + "]");
+        //System.out.println("GET x.key = [" + x.key + "], key = [" + key + "], index = [" + index + "], depth = [" + depth + "], keyCharPos = [" + keyCharPos + "], result = [" + result + "]");
         if (x == null) return;
 
         char c = key.charAt(index);
 
-        /*
+
         if (keyCharPos != -1 &&  // there is a key char, all strings must include this char
             depth == keyCharPos &&  // this is the key char
             c != LETTERS.charAt(keyCharPos)) { //this char must be present, otherwise return
                 result.clear();
                 return;
         }
-        */
+
 
         //ignore repetitive chars
         while (index < key.length() - 1 && c == key.charAt(index + 1))
@@ -93,7 +92,7 @@ public final class Unscramble {
 
     private final Node put(Node x, String key, String sortedKey, int index, int depth) {
         if (depth == NUMBER_OF_LETTERS) depth--;
-//        System.out.println("PUT x.key = [" + LETTERS.charAt(depth) + "], sortedKey = [" + sortedKey + "], index = [" + index + "], depth = [" + depth + "]");
+        //System.out.println("PUT x.key = [" + LETTERS.charAt(depth) + "], sortedKey = [" + sortedKey + "], index = [" + index + "], depth = [" + depth + "]");
         if (x == null) {
             x = new Node();
             x.key = LETTERS.charAt(depth);
@@ -113,7 +112,7 @@ public final class Unscramble {
         else {
             if (x.value == null) x.value = new ArrayList<String>();
             x.value.add(key);
-//            System.out.println("x.key = " + x.key + ", word = " + key);
+            //System.out.println("x.key = " + x.key + ", word = " + key);
         }
 
         return x;
@@ -121,12 +120,8 @@ public final class Unscramble {
 
     public static void main(String[] args) {
         Unscramble ds = new Unscramble();
-
         final String s = "emerald";
-
-        // ds.put(s);
-        ds.put("ladle");
-
-        System.out.println(ds.get("ladle", 'm'));
+        ds.put(s);
+        System.out.println(ds.get("merald", 'e'));
     }
 }
