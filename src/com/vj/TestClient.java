@@ -16,7 +16,7 @@ public class TestClient {
             char keyLetter = scanner.next().trim().charAt(0);
             Iterable<String> words = ds.get(letters, keyLetter);
             System.out.println("get(" + letters + ", " + keyLetter + ") = " + words);
-//            System.out.println("Get call count = " + ds.GET_CALL_COUNT);
+//            System.out.println("Get call count = " + ds.GET_NODES_VISITED);
         }
     }
 

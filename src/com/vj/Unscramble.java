@@ -11,7 +11,7 @@ public final class Unscramble {
     private static final String LETTERS = "abcdefghijklmnopqrstuvwxyz";
     private static final int NUMBER_OF_LETTERS = LETTERS.length();
     private static int NODE_COUNT = 0;
-    public static int GET_CALL_COUNT = 0;
+    public static int GET_NODES_VISITED = 0;
 
     private class Node {
         ArrayList<String> value;
@@ -50,7 +50,7 @@ public final class Unscramble {
 
 
     public final Iterable<String> get(String key, char keyChar) {
-        GET_CALL_COUNT = 0;
+        GET_NODES_VISITED = 0;
         char[] chars = key.toLowerCase().toCharArray();
         Arrays.sort(chars);
         int keyCharPos = LETTERS.indexOf(keyChar);
@@ -60,7 +60,7 @@ public final class Unscramble {
     }
 
     public final Iterable<String> get(String key) {
-        GET_CALL_COUNT = 0;
+        GET_NODES_VISITED = 0;
         char[] chars = key.toLowerCase().toCharArray();
         Arrays.sort(chars);
         ArrayList<String> result = new ArrayList<String>();
@@ -70,12 +70,12 @@ public final class Unscramble {
 
     private final void get(Node x, String key, int index, int depth, int keyCharPos, ArrayList<String> result) {
         if (x == null) return;
-        GET_CALL_COUNT++;
+        GET_NODES_VISITED++;
 //        System.out.println("GET x.key = [" + x.key + "], key = [" + key + "], index = [" + index + "], depth = [" + depth + "], keyCharPos = [" + keyCharPos + "], result = [" + result + "]");
 
         char c = key.charAt(index);
-        if (keyCharPos != -1 &&  // there is a key char, all strings must include this char
-            depth == keyCharPos &&  // this is the key char
+        if (keyCharPos != -1 &&                // there is a key char, all strings must include this char
+            depth == keyCharPos &&             // this is the key char
             c != LETTERS.charAt(keyCharPos)) { //this char must be present, otherwise return
                 result.clear();
                 return;
@@ -88,9 +88,9 @@ public final class Unscramble {
         if (c == x.key) {
             if (x.value != null && depth >= keyCharPos) result.addAll(x.value);
             if (index != key.length() - 1) {   // more chars to match
-                // Travese both ways
+                // Traverse both ways
                 get(x.yes, key, index + 1, depth + 1, keyCharPos, result); // traverse the 'yes' path
-                get(x.no, key, index+1, depth + 1, keyCharPos, result); //traverse the 'no' path as well
+                get(x.no,  key, index + 1, depth + 1, keyCharPos, result); //traverse the 'no' path as well
             }
         } else {//no path, don't progress the key index
             get(x.no, key, index, depth+1, keyCharPos, result);
