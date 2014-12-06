@@ -61,11 +61,3 @@ Technically, for the worst case data, the additional memory usage is huge.
      Total  = (2^16) * 2^4 bytes  = 2^20 bytes
 
 But, in reality, a dictionary is no where near the worst case. For a dictionary with over 75,000 words, it takes __less than 2MB extra space.__    
-
-
-[ref_unscramble_1]: {% post_url 2014-10-08-Unscramble-Part-I %} 
-[ref_unscramble_2]: {% post_url 2014-10-22-Unscramble-Part-II %} 
-[ref_trie]: http://en.wikipedia.org/wiki/Trie
-[ref_binary_tree]: http://en.wikipedia.org/wiki/Binary_tree
-[ref_github_unscramble]: https://github.com/vijayanant/Unscramble
-    
