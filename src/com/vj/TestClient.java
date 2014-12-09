@@ -6,6 +6,8 @@ public class TestClient {
     public static void main(String[] args) {
 
         Unscramble ds = new Unscramble(args[0]);
+        //ds.print_dot();
+
         System.out.println("ds.size = " + ds.size());
         System.out.println("NODE_COUNT = " + ds.size());
 
@@ -16,7 +18,7 @@ public class TestClient {
             char keyLetter = scanner.next().trim().charAt(0);
             Iterable<String> words = ds.get(letters, keyLetter);
             System.out.println("get(" + letters + ", " + keyLetter + ") = " + words);
-//            System.out.println("Get call count = " + ds.GET_NODES_VISITED);
+            System.out.println("Get call count = " + ds.GET_NODES_VISITED);
         }
     }
 

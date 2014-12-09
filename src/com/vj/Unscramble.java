@@ -129,6 +129,27 @@ public final class Unscramble {
         return x;
     }
 
+    //print the tree formatted for graphing by dot
+    public void print_dot() {
+        System.out.println("Digraph BST {");
+        print_dot(root);
+        System.out.println("}");
+    }
+    public void print_dot(Node x){
+        if(x == null){ return; }
+
+        System.out.println("\t" + System.identityHashCode(x) + "\t [label=\"" + x.key+ "\"]");
+        if(x.yes != null){
+            System.out.println("\t"+ System.identityHashCode(x) +" -> "+ System.identityHashCode(x.yes) + "\t [label=\"yes\"]");
+            print_dot(x.yes);
+        }
+        if(x.no != null){
+            System.out.println("\t"+ System.identityHashCode(x) +" -> "+System.identityHashCode(x.no) + "\t [label=\"no\"]");
+            print_dot(x.no);
+        }
+    }
+
+
 
     public static void main(String[] args) {
         Unscramble ds = new Unscramble();
