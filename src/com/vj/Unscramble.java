@@ -50,6 +50,7 @@ public final class Unscramble {
 
 
     public final Iterable<String> get(String key, char keyChar) {
+        System.out.println("key ="+key + "keyChar= "+ keyChar);
         GET_NODES_VISITED = 0;
         char[] chars = key.toLowerCase().toCharArray();
         Arrays.sort(chars);
@@ -60,6 +61,7 @@ public final class Unscramble {
     }
 
     public final Iterable<String> get(String key) {
+        System.out.println("key ="+key);
         GET_NODES_VISITED = 0;
         char[] chars = key.toLowerCase().toCharArray();
         Arrays.sort(chars);
@@ -74,6 +76,11 @@ public final class Unscramble {
 //        System.out.println("GET x.key = [" + x.key + "], key = [" + key + "], index = [" + index + "], depth = [" + depth + "], keyCharPos = [" + keyCharPos + "], result = [" + result + "]");
 
         char c = key.charAt(index);
+
+        //ignore repetitive chars
+        while (index < key.length() - 1 && c == key.charAt(index + 1))
+            c = key.charAt(++index);
+
         if (keyCharPos != -1 &&                // there is a key char, all strings must include this char
             depth == keyCharPos &&             // this is the key char
             c != LETTERS.charAt(keyCharPos)) { //this char must be present, otherwise return
@@ -81,9 +88,6 @@ public final class Unscramble {
                 return;
         }
 
-        //ignore repetitive chars
-        while (index < key.length() - 1 && c == key.charAt(index + 1))
-            c = key.charAt(++index);
 
         if (c == x.key) {
             if (x.value != null && depth >= keyCharPos) result.addAll(x.value);
