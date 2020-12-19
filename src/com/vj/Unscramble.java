@@ -50,7 +50,7 @@ public final class Unscramble {
 
 
     public final Iterable<String> get(String key, char keyChar) {
-        System.out.println("key ="+key + "keyChar= "+ keyChar);
+        System.out.println("key = "+key + " keyChar = "+ keyChar);
         GET_NODES_VISITED = 0;
         char[] chars = key.toLowerCase().toCharArray();
         Arrays.sort(chars);
@@ -81,20 +81,25 @@ public final class Unscramble {
         while (index < key.length() - 1 && c == key.charAt(index + 1))
             c = key.charAt(++index);
 
-        if (keyCharPos != -1 &&                // there is a key char, all strings must include this char
-            depth == keyCharPos &&             // this is the key char
-            c != LETTERS.charAt(keyCharPos)) { //this char must be present, otherwise return
-                result.clear();
-                return;
-        }
+        //if (keyCharPos != -1 &&                // there is a key char, all strings must include this char
+            //depth == keyCharPos &&             // this is the key char
+            //c != LETTERS.charAt(keyCharPos)) { //this char must be present, otherwise return
+                //result.clear();
+                //return;
+        //}
 
 
         if (c == x.key) {
             if (x.value != null && depth >= keyCharPos) result.addAll(x.value);
+
             if (index != key.length() - 1) {   // more chars to match
-                // Traverse both ways
-                get(x.yes, key, index + 1, depth + 1, keyCharPos, result); // traverse the 'yes' path
-                get(x.no,  key, index + 1, depth + 1, keyCharPos, result); //traverse the 'no' path as well
+              if (keyCharPos != -1 &&                // there is a key char
+                  depth == keyCharPos) {             // this is the key char, this char must be present
+                  get(x.yes, key, index + 1, depth + 1, keyCharPos, result); // traverse only 'yes' path
+              } else { // Traverse both ways
+                  get(x.yes, key, index + 1, depth + 1, keyCharPos, result); // traverse the 'yes' path
+                  get(x.no,  key, index + 1, depth + 1, keyCharPos, result); //traverse the 'no' path as well
+              }
             }
         } else {//no path, don't progress the key index
             get(x.no, key, index, depth+1, keyCharPos, result);
@@ -109,7 +114,7 @@ public final class Unscramble {
 
     private final Node put(Node x, String key, String sortedKey, int index, int depth) {
         if (depth == NUMBER_OF_LETTERS) depth--;
-//        System.out.println("PUT x.key = [" + LETTERS.charAt(depth) + "], sortedKey = [" + sortedKey + "], index = [" + index + "], depth = [" + depth + "]");
+        //System.out.println("PUT x.key = [" + LETTERS.charAt(depth) + "], sortedKey = [" + sortedKey + "], index = [" + index + "], depth = [" + depth + "]");
         if (x == null) {
             x = new Node();
             x.key = LETTERS.charAt(depth);
@@ -118,7 +123,7 @@ public final class Unscramble {
         char c = sortedKey.charAt(index);
         //ignore repetitive chars
         while (index < sortedKey.length() - 1 && c == sortedKey.charAt(index + 1))
-            c = sortedKey.charAt(++index);
+            ++index;
 
         if (c > LETTERS.charAt(depth))  //No path
             x.no = put(x.no, key, sortedKey, index, ++depth);
@@ -156,14 +161,11 @@ public final class Unscramble {
 
 
     public static void main(String[] args) {
-        Unscramble ds = new Unscramble();
+        Unscramble ds = new Unscramble(args[0]);
 
-        ds.put("blink");
-        ds.put("blinker");
-        ds.put("abc");
-        ds.put("ac");
+        //ds.print_dot();
 
-        System.out.println(ds.get("blinker", 'b'));
+        System.out.println(ds.get(args[1], args[2].charAt(0)));
 //        System.out.println("ds.size = " + ds.size());
     }
 }
